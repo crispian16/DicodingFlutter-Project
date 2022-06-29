@@ -1,7 +1,8 @@
-import 'package:dicoding_news_app/article.dart';
-import 'package:dicoding_news_app/detail_page.dart';
-import 'package:dicoding_news_app/list_page.dart';
-import 'package:dicoding_news_app/styles.dart';
+import 'package:dicoding_news_app/data/model/article.dart';
+import 'package:dicoding_news_app/ui/article_detail_page.dart';
+import 'package:dicoding_news_app/ui/article_web_view.dart';
+import 'package:dicoding_news_app/ui/home_page.dart';
+import 'package:dicoding_news_app/common/styles.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,31 +15,37 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News App',
       theme: ThemeData(
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-              primary: primaryColor,
-              onPrimary: Colors.black,
-              secondary: secondaryColor,
-            ),
+        primaryColor: primaryColor,
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: myTextTheme,
-        appBarTheme: AppBarTheme(elevation: 0),
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          toolbarTextStyle:
+              myTextTheme.apply(bodyColor: Colors.black).bodyText2,
+          titleTextStyle: myTextTheme.apply(bodyColor: Colors.black).headline6,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: secondaryColor,
+          unselectedItemColor: Colors.grey,
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: secondaryColor,
-            onPrimary: Colors.white,
-            textStyle: TextStyle(),
-            shape: RoundedRectangleBorder(
+            textStyle: const TextStyle(),
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(0),
               ),
             ),
           ),
         ),
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: secondaryColor),
       ),
-      initialRoute: NewsListPage.routeName,
+      initialRoute: HomePage.routeName,
       routes: {
-        NewsListPage.routeName: (context) => NewsListPage(),
+        HomePage.routeName: (context) => HomePage(),
         ArticleDetailPage.routeName: (context) => ArticleDetailPage(
               article: ModalRoute.of(context)?.settings.arguments as Article,
             ),
